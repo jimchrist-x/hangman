@@ -19,26 +19,27 @@ public class Hangman {
         if(loadWords(wordFile)) {
             String word=Data.getRandWord();
             UserInterface UI = new UserInterface(Data.getStages(), word.length());
+            Scanner readInput=new Scanner(System.in);
             String letter;
             int foundLetters=0;
-            int currectStage=0;
+            int currentStage=0;
             do {
-                UI.display(currectStage);
-                letter=UI.userInput();
+                UI.display(currentStage);
+                letter=UI.userInput(readInput);
                 boolean exists=false;
                 for (int i=0;i<word.length();i++) {
-                    if (letter.equals(Character.toString(word.toLowerCase().charAt(i)))) {
+                    if (letter.toLowerCase().equals(Character.toString(word.toLowerCase().charAt(i)))) {
                         exists=true;
-                        UI.setLetter(letter, i);
+                        UI.setLetter(letter.toLowerCase(), i);
                         foundLetters++;
                     }
                 }
                 if (!exists) {
-                    currectStage++;
+                    currentStage++;
                 }
-                Data.removeLetter(letter);
-            } while (Data.getStages().length>currectStage && word.length()>foundLetters);
-            if (Data.getStages().length<=currectStage) {
+                Data.removeLetter(letter.toLowerCase());
+            } while (Data.getStages().length>currentStage && word.length()>foundLetters);
+            if (Data.getStages().length<=currentStage) {
                 System.out.println("You lost! The word was " + word);
             } else {
                 System.out.println("Congrats! You won!");

@@ -23,9 +23,8 @@ public class UserInterface {
         }
         System.out.print("\n: ");
     }
-    public String userInput() {
+    public String userInput(Scanner readInput) {
         String input;
-        Scanner readInput=new Scanner(System.in);
         do {
             input=readInput.nextLine();
             if (input.length()>1) {
