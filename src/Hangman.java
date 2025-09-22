@@ -15,7 +15,7 @@ public class Hangman {
         }
     }
     public static void main(String[] args) {
-        File wordFile= new File("./src/words_alpha.txt");
+        File wordFile= new File("words_alpha.txt");
         if(loadWords(wordFile)) {
             String word=Data.getRandWord();
             UserInterface UI = new UserInterface(Data.getStages(), word.length());
