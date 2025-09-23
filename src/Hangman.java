@@ -15,7 +15,7 @@ public class Hangman {
         }
     }
     public static void main(String[] args) {
-        File wordFile= new File("words_alpha.txt");
+        File wordFile= new File("/home/jimchrist-x/Documents/java-programming/hangman/src/words_alpha.txt");
         if(loadWords(wordFile)) {
             String word=Data.getRandWord();
             UserInterface UI = new UserInterface(Data.getStages(), word.length());
@@ -27,17 +27,27 @@ public class Hangman {
                 UI.display(currentStage);
                 letter=UI.userInput(readInput);
                 boolean exists=false;
-                for (int i=0;i<word.length();i++) {
-                    if (letter.toLowerCase().equals(Character.toString(word.toLowerCase().charAt(i)))) {
-                        exists=true;
-                        UI.setLetter(letter.toLowerCase(), i);
-                        foundLetters++;
+                boolean alreadyTyped=false;
+                for (String typed : Data.getTypedLetters()) {
+                    if(typed.equals(letter.toLowerCase())) {
+                        alreadyTyped=true;
+                        break;
                     }
                 }
-                if (!exists) {
-                    currentStage++;
+                if (!alreadyTyped) {
+                    for (int i=0;i<word.length();i++) {
+                        if (letter.toLowerCase().equals(Character.toString(word.toLowerCase().charAt(i)))) {
+                            exists=true;
+                            UI.setLetter(letter.toLowerCase(), i);
+                            foundLetters++;
+                        }
+                    }
+                    if (!exists) {
+                        currentStage++;
+                    }
+                    Data.setTypedLetter(letter.toLowerCase());
+                    Data.removeLetter(letter.toLowerCase());
                 }
-                Data.removeLetter(letter.toLowerCase());
             } while (Data.getStages().length>currentStage && word.length()>foundLetters);
             if (Data.getStages().length<=currentStage) {
                 System.out.println("You lost! The word was " + word);

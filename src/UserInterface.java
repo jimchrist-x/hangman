@@ -21,6 +21,11 @@ public class UserInterface {
         for (String letter : Data.getRemainingLetters()) {
             System.out.print(letter);
         }
+        System.out.println();
+        System.out.print("Typed letters: ");
+        for (String letter: Data.getTypedLetters()) {
+            System.out.print(letter);
+        }
         System.out.print("\n: ");
     }
     public String userInput(Scanner readInput) {
