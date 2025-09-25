@@ -15,7 +15,7 @@ public class Hangman {
         }
     }
     public static void main(String[] args) {
-        File wordFile= new File("words_alpha.txt");
+        File wordFile= new File("resources/words_alpha.txt");
         if(loadWords(wordFile)) {
             String word=Data.getRandWord();
             UserInterface UI = new UserInterface(Data.getStages(), word.length());
@@ -23,7 +23,9 @@ public class Hangman {
             String letter;
             int foundLetters=0;
             int currentStage=0;
+            Score score = new Score();
             do {
+                score.setScore(foundLetters, currentStage);
                 UI.display(currentStage);
                 letter=UI.userInput(readInput);
                 boolean exists=false;
@@ -49,11 +51,7 @@ public class Hangman {
                     Data.removeLetter(letter.toLowerCase());
                 }
             } while (Data.getStages().length>currentStage && word.length()>foundLetters);
-            if (Data.getStages().length<=currentStage) {
-                System.out.println("You lost! The word was " + word);
-            } else {
-                System.out.println("Congrats! You won!");
-            }
+            UI.endMessage(currentStage, score.getCurrentScore(), word);
         }
 
     }

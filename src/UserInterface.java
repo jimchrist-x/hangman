@@ -39,4 +39,11 @@ public class UserInterface {
         } while(input.length()>1);
         return input;
     }
+    public void endMessage(int errors, double score, String word) {
+        if (Data.getStages().length<=errors) {
+            System.out.println("You lost!\nThe word was " + word);
+        } else {
+            System.out.println("Congrats! You won! \nYour total score was " + Math.round(score));
+        }
+    }
 }
